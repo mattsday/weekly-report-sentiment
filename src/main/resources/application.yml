@@ -1,0 +1,42 @@
+security:
+  oauth2:
+    client:
+      accessTokenUri: https://www.googleapis.com/oauth2/v4/token
+      userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
+      clientAuthenticationScheme: form
+      scope: openid, email, profile, https://www.googleapis.com/auth/drive.readonly, https://www.googleapis.com/auth/cloud-language
+    resource:
+      userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
+      preferTokenInfo: true
+  basic:
+    enabled: false
+server:
+  port: 8080
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:h2:~/new-sentiment-db
+    initialize: false
+  jackson:
+    serialization:
+      ORDER_MAP_ENTRIES_BY_KEYS: true
+googleapi:
+  drive:
+    list:
+      uri: "https://www.googleapis.com/drive/v3/files?q='{folder}' in parents&fields=files&orderBy=name"
+    get:
+      uri: "https://www.googleapis.com/drive/v3/files/{id}/export?mimeType=text/plain"
+  sentiment:
+    uri: https://language.googleapis.com/v1/documents:analyzeSentiment
+reports:
+  folder: 0B9XNf23Qd2uET1h2Z21GaG1ldGM
+  pattern: ^Weekly Report EMEA UKI - (\d{2,4}.\d{2}.\d{2,4})$
+  mutation:
+    ipagoo: Orwell
+    Ipagoo: Orwell
+    Dell/EMC: DellEMC
+    Sainsbury: Sainsburys
+    VW_UK: VW
+    MSFT: Microsoft

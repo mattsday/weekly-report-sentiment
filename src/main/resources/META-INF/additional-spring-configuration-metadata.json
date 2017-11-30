@@ -1,0 +1,27 @@
+{"properties": [
+  {
+    "name": "reports.folder",
+    "type": "java.lang.String",
+    "description": "Folder the weekly reports use in Google Drive"
+  },
+  {
+    "name": "reports.pattern",
+    "type": "java.lang.String",
+    "description": "Regexp pattern to match a valid weekly report"
+  },
+  {
+    "name": "googleapi.sentiment.uri",
+    "type": "java.lang.String",
+    "description": "Google sentiment base URI"
+  },
+  {
+    "name": "googleapi.drive.list.uri",
+    "type": "java.lang.String",
+    "description": "Google drive query to retrieve list of files from a folder"
+  },
+  {
+    "name": "googleapi.drive.get.uri",
+    "type": "java.lang.String",
+    "description": "Google drive query to retrieve contents of a file"
+  }
+]}

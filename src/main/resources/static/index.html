@@ -1,0 +1,82 @@
+
+<html>
+<head>
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript"
+	src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script type="text/javascript">
+	google.charts.load('current', {
+		callback : loadCharts,
+		packages : [ 'corechart', 'table' ]
+	});
+
+	function drawChart(jsonData) {
+		var data = new google.visualization.DataTable(jsonData);
+		var options = {
+			title : 'Sentiment over time',
+			curveType : 'function',
+			legend : {
+				position : 'bottom'
+			},
+			pointSize : 5,
+			vAxis : {
+				minValue : -1,
+				maxValue : 1
+			}
+		};
+
+		var chart = new google.visualization.LineChart(document
+				.getElementById('curve_chart'));
+		google.visualization.events.addListener(chart, 'click', clickHandler);
+		function clickHandler(e) {
+			var m = e.targetID.match(/.*#\d+#(\d+)/);
+			if (m) {
+				window.location.href = "#" + data.getValue(parseInt(m[1]), 0);
+			}
+		}
+		chart.draw(data, options);
+	}
+
+	function loadCharts() {
+		var url = "/v1/chart/sentiment";
+		var l = window.location.hash.substr(1);
+
+		// Is the anchor pointing at a date?
+		if (l.match(/\d{4}-\d{2}-\d{2}/)) {
+			// Do nothing for now
+		} else if (l.length > 0) {
+			// Assume it's a customer
+			url = "/v1/chart/sentiment/customer/" + l;
+		}
+
+		$.when($.ajax({
+			url : url,
+			dataType : "json",
+			async : true
+		})).done(function(jsonData) {
+			drawChart(jsonData);
+		});
+	}
+
+	function updateCharts() {
+
+	}
+
+	$(document).ready(function() {
+		startup()
+	});
+
+	function startup() {
+		$(window).bind('hashchange', function() {
+			loadCharts();
+		});
+	}
+
+	//function
+</script>
+</head>
+<body>
+	<div id="curve_chart" style="width: 100%; height: 100%"></div>
+</body>
+</html>
