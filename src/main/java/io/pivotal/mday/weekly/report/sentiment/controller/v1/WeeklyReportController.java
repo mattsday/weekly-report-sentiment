@@ -72,4 +72,15 @@ public class WeeklyReportController {
 		return sortedDates;
 	}
 
+	@GetMapping("/plays")
+	public List<String> listPlays() {
+		reportService.parseWeeklyReports();
+		Set<String> plays = new HashSet<>();
+		for (WeeklyReportEntry e : repo.findAll()) {
+			plays.add(e.getSalesPlay());
+		}
+		List<String> sortedPlays = new ArrayList<>(plays);
+		Collections.sort(sortedPlays);
+		return sortedPlays;
+	}
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="webjars/chosen/chosen.jquery.js"></script>
+<link rel="stylesheet" href="webjars/chosen/chosen.css" />
+<link rel="stylesheet" href="css/styles.css" />
+<meta name="_csrf" th:attr="content=${_csrf.token}" />
+<meta name="_csrf_header" th:attr="content=${_csrf.headerName}" />
+<script type="text/javascript">
+	function testPost() {
+		var obj = {
+			"customer" : "MyCustomer",
+			"date" : "2017-04-28"
+		}
+		dataString = JSON.stringify(obj);
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content")
+
+		$.ajax({
+			type : "POST",
+			url : "/v1/chart/table/request",
+			contentType : 'application/json',
+			beforeSend : function(request) {
+				request.setRequestHeader(header, token);
+			},
+			processData : false,
+			data : dataString,
+			success : function(response) {
+				alert(response)
+			},
+			dataType : "json"
+		});
+	}
+
+	$(document).ready(function() {
+		testPost()
+	});
+</script>
+<title>Weekly Report Sentiment</title>
+</head>
+<body>
+	<h1>Hello world!</h1>
+	<p th:text="'Hello, ' + ${_csrf.token} + '!'" />
+	<form>
+		<input type="text" name="hello" value="world" /><input type="submit" /> <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+	</form>
+</body>
+</html>

@@ -49,7 +49,7 @@ public class WeeklyReportService {
 			if (contents != null) {
 				// Parse the report
 				parseWeeklyReport(contents, date);
-				fileRepo.save(file);
+				fileRepo.saveAndFlush(file);
 			}
 		}
 	}
@@ -161,7 +161,7 @@ public class WeeklyReportService {
 				entry.setHash(hash);
 				// Save the date
 				entry.setDate(date);
-				reportRepo.save(entry);
+				reportRepo.saveAndFlush(entry);
 			}
 		}
 		// Now cleanup

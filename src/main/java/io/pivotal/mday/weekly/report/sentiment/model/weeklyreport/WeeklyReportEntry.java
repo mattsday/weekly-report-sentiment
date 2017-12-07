@@ -54,18 +54,14 @@ public class WeeklyReportEntry implements Comparable<WeeklyReportEntry> {
 		final int myDate = formatDate(this.date);
 		final int theirDate = formatDate(c.getDate());
 		if ((myDate == 0) || (theirDate == 0)) {
-			System.out.println("me = " + myDate + " they = " + theirDate + " -- one of us is uncertain!");
 			// Return 0 if uncertain
 			return 0;
 		}
 		if (myDate == theirDate) {
-			System.out.println(myDate + " == " + theirDate);
 			return 0;
 		} else if (myDate > theirDate) {
-			System.out.println(myDate + " > " + theirDate);
 			return 1;
 		} else {
-			System.out.println(myDate + " < " + theirDate);
 			return -1;
 		}
 	}

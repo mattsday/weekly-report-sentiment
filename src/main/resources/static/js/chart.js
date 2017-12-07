@@ -3,6 +3,33 @@ google.charts.load('current', {
 	packages : [ 'corechart', 'table' ]
 });
 
+function drawDateChart(jsonData) {
+	var data = new google.visualization.DataTable(jsonData);
+	var options = {
+		title : 'Sales Plays',
+		hAxis : {
+			title : 'Entry'
+		},
+		vAxis : {
+			minValue : -1,
+			maxValue : 1,
+			title : 'Sales Play'
+		},
+		bubble : {
+			textStyle : {
+				fontSize : 11
+			}
+		}
+
+	};
+	var chart = new google.visualization.BubbleChart(document
+			.getElementById('curve_chart'));
+
+	// google.visualization.events.addListener(chart, 'click', clickHandler);
+
+	chart.draw(data, options);
+}
+
 function drawSentimentChart(jsonData) {
 	var data = new google.visualization.DataTable(jsonData);
 	var options = {
@@ -27,9 +54,10 @@ function drawSentimentChart(jsonData) {
 			var date = data.getValue(parseInt(m[1]), 0);
 			var a;
 			try {
-				var a = JSON
-				.parse(decodeURIComponent(window.location.hash.substring(1)));
-			} catch (e) {
+				var a = JSON.parse(decodeURIComponent(window.location.hash
+						.substring(1)));
+			}
+			catch (e) {
 				a = new Object();
 			}
 			if (!a.customer) {
@@ -62,7 +90,8 @@ function loadCharts() {
 				.parse(decodeURIComponent(window.location.hash.substring(1)));
 		customer = a.customer;
 		date = a.date;
-	} catch (e) {
+	}
+	catch (e) {
 		a = new Object();
 	}
 
@@ -70,21 +99,34 @@ function loadCharts() {
 	var tableUrl = "/v1/chart/table"
 
 	// Is the anchor pointing at a date?
-	if (customer.match(/\d{4}-\d{2}-\d{2}/)) {
-		// Do nothing for now
-	} else if ((customer != "_all") && (customer.length > 0)) {
+	if ((customer != "_all") && (customer.length > 0)) {
 		// Assume it's a customer
 		sentimentChartUrl = "/v1/chart/sentiment/customer/" + customer;
 		tableUrl = "/v1/chart/table/customer/" + customer;
 	}
 
-	$.when($.ajax({
-		url : sentimentChartUrl,
-		dataType : "json",
-		async : true
-	})).done(function(jsonData) {
-		drawSentimentChart(jsonData);
-	});
+	if (date != "_all") {
+		tableUrl += "/date/" + date;
+		sentimentChartUrl += "/date/" + date;
+		// Draw a different type of chart:
+		$.when($.ajax({
+			url : sentimentChartUrl,
+			dataType : "json",
+			async : true
+		})).done(function(jsonData) {
+			drawDateChart(jsonData);
+		});
+	}
+	else {
+		// Draw the usual chart
+		$.when($.ajax({
+			url : sentimentChartUrl,
+			dataType : "json",
+			async : true
+		})).done(function(jsonData) {
+			drawSentimentChart(jsonData);
+		});
+	}
 
 	$.when($.ajax({
 		url : tableUrl,

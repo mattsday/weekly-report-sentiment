@@ -12,14 +12,19 @@ import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
+import io.pivotal.mday.weekly.report.sentiment.config.PlayMap;
 import io.pivotal.mday.weekly.report.sentiment.model.google.charts.ChartTable;
 import io.pivotal.mday.weekly.report.sentiment.model.google.charts.Col;
 import io.pivotal.mday.weekly.report.sentiment.model.google.charts.Row;
 import io.pivotal.mday.weekly.report.sentiment.model.google.charts.RowData;
 import io.pivotal.mday.weekly.report.sentiment.model.weeklyreport.WeeklyReportEntry;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class GoogleChartService {
+
+	private PlayMap playMap;
 
 	// Converts a collection to a standard data table
 	public ChartTable reportToDataTable(List<WeeklyReportEntry> reports) {
@@ -50,10 +55,43 @@ public class GoogleChartService {
 				new Col("G", "Report Text", "string"), }));
 	}
 
+	public ChartTable reportToSalesPlay(List<WeeklyReportEntry> reports) {
+		List<Row> rows = new ArrayList<>(reports.size());
+		ChartTable table = new ChartTable();
+		table.setCols(getSalesPlayCols());
+		table.setRows(rows);
+		int i = 1;
+		for (WeeklyReportEntry e : reports) {
+			Row row = new Row();
+			row.add(new RowData(e.getCustomer()));
+			row.add(new RowData("" + i++));
+			row.add(new RowData("" + getPlay(e.getSalesPlay())));
+			row.add(new RowData(e.getSalesPlay()));
+			row.add(new RowData(e.getSentiment()));
+			rows.add(row);
+		}
+		return table;
+
+	}
+
+	private int getPlay(String play) {
+		int playNumber = -1;
+		if (playMap.getPlays().containsKey(play)) {
+			playNumber = playMap.getPlays().get(play);
+		}
+		return playNumber;
+	}
+
+	private List<Col> getSalesPlayCols() {
+		return new ArrayList<Col>(Arrays.asList(new Col[] { new Col("A", "Customer", "string"),
+				new Col("B", "Sequence", "number"), new Col("C", "Sentiment", "number"),
+				new Col("D", "Sales Play", "string"), new Col("D", "Sentiment", "number"), }));
+	}
+
 	// Converts a collection to a table suitable for a line chart report
 	public ChartTable reportToLineChartTable(List<WeeklyReportEntry> reports) {
 
-		List<Row> rows = new ArrayList<>(100);
+		List<Row> rows = new ArrayList<>(reports.size());
 		ChartTable table = new ChartTable();
 		table.setCols(getLineChartCols());
 		table.setRows(rows);
