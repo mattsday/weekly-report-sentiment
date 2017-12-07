@@ -109,8 +109,12 @@ public class WeeklyReportService {
 
 		states state = states.none;
 
+		// Store all the hashes we get
+		List<String> hashes = new ArrayList<>(lines.length / 2);
+
 		for (String line : lines) {
 			final String hash = DigestUtils.sha1Hex(line);
+			hashes.add(hash);
 
 			// Have we been to this rodeo before? Eagerly discard
 			if (!reportRepo.findByHash(hash).isEmpty()) {

@@ -12,7 +12,6 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class GoogleSentimentService {
 	private OAuth2RestTemplate restTemplate;
-
 	private SentimentConfiguration sentimentConfiguration;
 
 	public SentimentResponse getSentiment(String content) {
