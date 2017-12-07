@@ -5,78 +5,29 @@
 	src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript"
 	src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script type="text/javascript" src="js/site.js"></script>
+<script type="text/javascript" src="js/chart.js"></script>
+<script src="webjars/chosen/chosen.jquery.js"></script>
+<link rel="stylesheet" href="webjars/chosen/chosen.css">
+<link rel="stylesheet" href="css/styles.css">
 <script type="text/javascript">
-	google.charts.load('current', {
-		callback : loadCharts,
-		packages : [ 'corechart', 'table' ]
-	});
-
-	function drawChart(jsonData) {
-		var data = new google.visualization.DataTable(jsonData);
-		var options = {
-			title : 'Sentiment over time',
-			curveType : 'function',
-			legend : {
-				position : 'bottom'
-			},
-			pointSize : 5,
-			vAxis : {
-				minValue : -1,
-				maxValue : 1
-			}
-		};
-
-		var chart = new google.visualization.LineChart(document
-				.getElementById('curve_chart'));
-		google.visualization.events.addListener(chart, 'click', clickHandler);
-		function clickHandler(e) {
-			var m = e.targetID.match(/.*#\d+#(\d+)/);
-			if (m) {
-				window.location.href = "#" + data.getValue(parseInt(m[1]), 0);
-			}
-		}
-		chart.draw(data, options);
-	}
-
-	function loadCharts() {
-		var url = "/v1/chart/sentiment";
-		var l = window.location.hash.substr(1);
-
-		// Is the anchor pointing at a date?
-		if (l.match(/\d{4}-\d{2}-\d{2}/)) {
-			// Do nothing for now
-		} else if (l.length > 0) {
-			// Assume it's a customer
-			url = "/v1/chart/sentiment/customer/" + l;
-		}
-
-		$.when($.ajax({
-			url : url,
-			dataType : "json",
-			async : true
-		})).done(function(jsonData) {
-			drawChart(jsonData);
-		});
-	}
-
-	function updateCharts() {
-
-	}
-
 	$(document).ready(function() {
-		startup()
+		$(".chosen-select").chosen();
 	});
-
-	function startup() {
-		$(window).bind('hashchange', function() {
-			loadCharts();
-		});
-	}
-
-	//function
 </script>
+<title>Weekly Report Sentiment</title>
 </head>
 <body>
-	<div id="curve_chart" style="width: 100%; height: 100%"></div>
+	<form id="cust_select_form">
+		<select name="customer" class="chosen-select" id="cust_select">
+			<option value="_all">All</option>
+		</select>
+		<select name="date" class="chosen-select" id="date_select">
+			<option value="_all">All</option>
+		</select>
+	</form>
+	<div id="curve_chart"></div>
+
+	<div id="report_table"></div>
 </body>
 </html>

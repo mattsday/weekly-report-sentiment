@@ -20,10 +20,16 @@ public class ChartController {
 	private WeeklyReportRepo repo;
 	private WeeklyReportService reportService;
 
-	@GetMapping("/test")
-	public ChartTable getChartTest() {
+	@GetMapping("/table")
+	public ChartTable getCustomerTable() {
 		reportService.parseWeeklyReports();
 		return chartService.reportToDataTable(repo.findAll());
+	}
+
+	@GetMapping("/table/customer/{customer}")
+	public ChartTable getCustomerTableForCustomer(@PathVariable("customer") String customer) {
+		reportService.parseWeeklyReports();
+		return chartService.reportToDataTable(repo.findByCustomerIgnoreCase(customer));
 	}
 
 	@GetMapping("/sentiment")
@@ -37,5 +43,4 @@ public class ChartController {
 		reportService.parseWeeklyReports();
 		return chartService.reportToLineChartTable(repo.findByCustomerIgnoreCase(customer));
 	}
-
 }

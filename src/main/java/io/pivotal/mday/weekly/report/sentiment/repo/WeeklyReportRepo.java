@@ -12,4 +12,6 @@ public interface WeeklyReportRepo extends JpaRepository<WeeklyReportEntry, Long>
 	public List<WeeklyReportEntry> findByCustomerIgnoreCase(String customer);
 
 	public List<WeeklyReportEntry> findByCategoryIgnoreCase(String category);
+
+	public List<WeeklyReportEntry> findByDate(String date);
 }

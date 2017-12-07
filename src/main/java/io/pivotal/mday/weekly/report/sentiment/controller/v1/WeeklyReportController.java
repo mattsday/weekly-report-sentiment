@@ -1,7 +1,11 @@
 package io.pivotal.mday.weekly.report.sentiment.controller.v1;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +46,30 @@ public class WeeklyReportController {
 	public Collection<WeeklyReportEntry> listByCategory(
 			@PathVariable(name = "category", required = true) String customer) {
 		return repo.findByCategoryIgnoreCase(customer);
+	}
+
+	@GetMapping("/customers")
+	public List<String> listCustomers() {
+		reportService.parseWeeklyReports();
+		Set<String> customers = new HashSet<>();
+		for (WeeklyReportEntry e : repo.findAll()) {
+			customers.add(e.getCustomer());
+		}
+		List<String> sortedCustomers = new ArrayList<>(customers);
+		Collections.sort(sortedCustomers);
+		return sortedCustomers;
+	}
+
+	@GetMapping("/dates")
+	public List<String> listDates() {
+		reportService.parseWeeklyReports();
+		Set<String> dates = new HashSet<>();
+		for (WeeklyReportEntry e : repo.findAll()) {
+			dates.add(e.getDate());
+		}
+		List<String> sortedDates = new ArrayList<>(dates);
+		Collections.sort(sortedDates);
+		return sortedDates;
 	}
 
 }

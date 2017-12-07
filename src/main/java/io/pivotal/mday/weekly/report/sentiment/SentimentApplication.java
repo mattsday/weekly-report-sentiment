@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth
 
 @SpringBootApplication
 @EnableOAuth2Sso
-public class CollectorApplication {
+public class SentimentApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CollectorApplication.class, args);
+		SpringApplication.run(SentimentApplication.class, args);
 	}
 }

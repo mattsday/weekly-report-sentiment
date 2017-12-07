@@ -164,6 +164,12 @@ public class WeeklyReportService {
 				reportRepo.save(entry);
 			}
 		}
+		// Now cleanup
+		for (WeeklyReportEntry e : reportRepo.findByDate(date)) {
+			if (hashes.contains(e.getHash()))
+				continue;
+			reportRepo.delete(e.getId());
+		}
 	}
 
 	private WeeklyReportEntry getReportEntry(String line, states state) {
