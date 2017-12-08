@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.QueryByExampleExecutor;
 import io.pivotal.mday.weekly.report.sentiment.model.weeklyreport.WeeklyReportEntry;
 
 public interface WeeklyReportRepo
-		extends JpaRepository<WeeklyReportEntry, Long>, QueryByExampleExecutor<WeeklyReportEntry> {
+		extends JpaRepository<WeeklyReportEntry, String>, QueryByExampleExecutor<WeeklyReportEntry> {
 	public List<WeeklyReportEntry> findByHash(String hash);
 
 	public List<WeeklyReportEntry> findByCustomerIgnoreCase(String customer);

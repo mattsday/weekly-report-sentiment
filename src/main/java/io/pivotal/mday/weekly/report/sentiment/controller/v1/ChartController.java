@@ -13,7 +13,6 @@ import io.pivotal.mday.weekly.report.sentiment.model.google.charts.ChartTable;
 import io.pivotal.mday.weekly.report.sentiment.model.weeklyreport.WeeklyReportEntry;
 import io.pivotal.mday.weekly.report.sentiment.repo.WeeklyReportRepo;
 import io.pivotal.mday.weekly.report.sentiment.services.GoogleChartService;
-import io.pivotal.mday.weekly.report.sentiment.services.WeeklyReportService;
 import lombok.AllArgsConstructor;
 
 @RequestMapping("/v1/chart")
@@ -23,10 +22,8 @@ public class ChartController {
 
 	private GoogleChartService chartService;
 	private WeeklyReportRepo repo;
-	private WeeklyReportService reportService;
 
 	private List<WeeklyReportEntry> findAll(WeeklyReportEntry entry) {
-		reportService.parseWeeklyReports();
 		Example<WeeklyReportEntry> example = Example.of(entry);
 		List<WeeklyReportEntry> results = repo.findAll(example);
 		if (entry.getPas() == null) {

@@ -26,6 +26,12 @@ public class WeeklyReportController {
 	private WeeklyReportService reportService;
 	private WeeklyReportRepo repo;
 
+	@GetMapping("/update")
+	public String update() {
+		reportService.parseWeeklyReports();
+		return "Done";
+	}
+
 	@GetMapping("/list")
 	public List<WeeklyReportEntry> listAll() {
 		return repo.findAll();
@@ -45,7 +51,6 @@ public class WeeklyReportController {
 
 	@GetMapping("/customers")
 	public List<String> listCustomers() {
-		reportService.parseWeeklyReports();
 		Set<String> customers = new HashSet<>();
 		for (WeeklyReportEntry e : repo.findAll()) {
 			customers.add(e.getCustomer());
@@ -57,19 +62,17 @@ public class WeeklyReportController {
 
 	@GetMapping("/dates")
 	public List<String> listDates() {
-		reportService.parseWeeklyReports();
 		Set<String> dates = new HashSet<>();
 		for (WeeklyReportEntry e : repo.findAll()) {
 			dates.add(e.getDate());
 		}
 		List<String> sortedDates = new ArrayList<>(dates);
-		Collections.sort(sortedDates);
+		Collections.sort(sortedDates, Collections.reverseOrder());
 		return sortedDates;
 	}
 
 	@GetMapping("/plays")
 	public List<String> listPlays() {
-		reportService.parseWeeklyReports();
 		Set<String> plays = new HashSet<>();
 		for (WeeklyReportEntry e : repo.findAll()) {
 			plays.add(e.getSalesPlay());
@@ -81,7 +84,6 @@ public class WeeklyReportController {
 
 	@GetMapping("/pas")
 	public List<String> listPas() {
-		reportService.parseWeeklyReports();
 		Set<String> pas = new HashSet<>();
 		for (WeeklyReportEntry e : repo.findAll()) {
 			pas.addAll(e.getPas());
@@ -93,14 +95,8 @@ public class WeeklyReportController {
 
 	@GetMapping("/sentiment")
 	public List<Double> listSentiment() {
-		reportService.parseWeeklyReports();
-		Set<Double> sentiment = new HashSet<>();
-		for (WeeklyReportEntry e : repo.findAll()) {
-			sentiment.add(e.getSentiment());
-		}
-		List<Double> sortedSentiment = new ArrayList<>(sentiment);
-		Collections.sort(sortedSentiment);
-		return sortedSentiment;
+		return Arrays.asList(new Double[] { 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0d, -0.1, -0.2, -0.3, -0.4,
+				-0.5, -0.6, -0.7, -0.8, -0.9 });
 	}
 
 	@GetMapping("/categories")

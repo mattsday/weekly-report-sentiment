@@ -33,7 +33,7 @@ public class GoogleChartService {
 		table.setCols(getDataTableCols());
 		table.setRows(rows);
 
-		Collections.sort(reports);
+		Collections.sort(reports, Collections.reverseOrder());
 		for (WeeklyReportEntry e : reports) {
 			Row row = new Row();
 			row.add(new RowData(e.getDate()));

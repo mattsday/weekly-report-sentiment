@@ -168,7 +168,7 @@ public class WeeklyReportService {
 		for (WeeklyReportEntry e : reportRepo.findByDate(date)) {
 			if (hashes.contains(e.getHash()))
 				continue;
-			reportRepo.delete(e.getId());
+			reportRepo.delete(e.getHash());
 		}
 	}
 

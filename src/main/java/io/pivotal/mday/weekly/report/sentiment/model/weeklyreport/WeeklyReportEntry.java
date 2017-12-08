@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -19,9 +19,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class WeeklyReportEntry implements Comparable<WeeklyReportEntry> {
 	@Id
-	@GeneratedValue
 	@JsonIgnore
-	private Long id;
+	private String hash;
+
+	@Version
+	@JsonIgnore
+	private Integer version;
 
 	@JsonProperty("category")
 	private String category;
@@ -45,9 +48,6 @@ public class WeeklyReportEntry implements Comparable<WeeklyReportEntry> {
 
 	@JsonProperty("date")
 	private String date;
-
-	@JsonIgnore
-	private String hash;
 
 	@Override
 	public int compareTo(WeeklyReportEntry c) {

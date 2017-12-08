@@ -26,18 +26,18 @@ select#cust_select {
 	width: 400px
 }
 select#date_select {
-	width: 200px
+	width: 150px
 }
 
 select#sentiment_select {
-	width: 80px
+	width: 120px
 }
 select#pa_select {
 	width: 200px
 }
 select#play_select {
-	width: 100px
+	width: 150px
 }
 select#category_select {
-	width: 100px
+	width: 120px
 }
