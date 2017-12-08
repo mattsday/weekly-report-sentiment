@@ -52,17 +52,7 @@ function drawSentimentChart(jsonData) {
 		var m = e.targetID.match(/.*#\d+#(\d+)/);
 		if (m) {
 			var date = data.getValue(parseInt(m[1]), 0);
-			var a;
-			try {
-				var a = JSON.parse(decodeURIComponent(window.location.hash
-						.substring(1)));
-			}
-			catch (e) {
-				a = new Object();
-			}
-			if (!a.customer) {
-				a.customer = "_all"
-			}
+			var a = getHash();
 			a.date = date;
 			location.hash = JSON.stringify(a);
 		}
@@ -82,37 +72,57 @@ function drawReportTable(jsonData) {
 }
 
 function loadCharts() {
-	var a;
+	var a = getHash();
 	var customer = "_all";
 	var date = "_all";
 	try {
-		var a = JSON
-				.parse(decodeURIComponent(window.location.hash.substring(1)));
+		var a = getHash();
 		customer = a.customer;
 		date = a.date;
 	}
 	catch (e) {
 		a = new Object();
+		a.customer = customer;
+		a.date = date;
 	}
 
 	var sentimentChartUrl = "/v1/chart/sentiment";
 	var tableUrl = "/v1/chart/table"
-
-	// Is the anchor pointing at a date?
-	if ((customer != "_all") && (customer.length > 0)) {
-		// Assume it's a customer
-		sentimentChartUrl = "/v1/chart/sentiment/customer/" + customer;
-		tableUrl = "/v1/chart/table/customer/" + customer;
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content")
+	if (a.date == "_all") {
+		delete a.date;
 	}
+	if (a.customer == "_all") {
+		delete a.customer;
+	}
+	if (a.sales_play == "_all") {
+		delete a.sales_play;
+	}
+	if (a.pas == "_all") {
+		delete a.pas;
+	}
+	if (a.sentiment == "_all") {
+		delete a.sentiment;
+	}
+	if (a.category == "_all") {
+		delete a.category;
+	}
+	var dataString = JSON.stringify(a);
 
 	if (date != "_all") {
-		tableUrl += "/date/" + date;
-		sentimentChartUrl += "/date/" + date;
 		// Draw a different type of chart:
+
 		$.when($.ajax({
-			url : sentimentChartUrl,
-			dataType : "json",
-			async : true
+			type : "POST",
+			url : "/v1/chart/date",
+			contentType : 'application/json',
+			beforeSend : function(request) {
+				request.setRequestHeader(header, token);
+			},
+			processData : false,
+			data : dataString,
+			dataType : "json"
 		})).done(function(jsonData) {
 			drawDateChart(jsonData);
 		});
@@ -120,18 +130,29 @@ function loadCharts() {
 	else {
 		// Draw the usual chart
 		$.when($.ajax({
-			url : sentimentChartUrl,
-			dataType : "json",
-			async : true
+			type : "POST",
+			url : "/v1/chart/sentiment",
+			contentType : 'application/json',
+			beforeSend : function(request) {
+				request.setRequestHeader(header, token);
+			},
+			processData : false,
+			data : dataString,
+			dataType : "json"
 		})).done(function(jsonData) {
 			drawSentimentChart(jsonData);
 		});
 	}
-
 	$.when($.ajax({
-		url : tableUrl,
-		dataType : "json",
-		async : true
+		type : "POST",
+		url : "/v1/chart/table",
+		contentType : 'application/json',
+		beforeSend : function(request) {
+			request.setRequestHeader(header, token);
+		},
+		processData : false,
+		data : dataString,
+		dataType : "json"
 	})).done(function(jsonData) {
 		drawReportTable(jsonData);
 	});

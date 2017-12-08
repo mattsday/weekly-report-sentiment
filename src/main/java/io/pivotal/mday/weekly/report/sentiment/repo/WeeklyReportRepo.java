@@ -3,10 +3,12 @@ package io.pivotal.mday.weekly.report.sentiment.repo;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.QueryByExampleExecutor;
 
 import io.pivotal.mday.weekly.report.sentiment.model.weeklyreport.WeeklyReportEntry;
 
-public interface WeeklyReportRepo extends JpaRepository<WeeklyReportEntry, Long> {
+public interface WeeklyReportRepo
+		extends JpaRepository<WeeklyReportEntry, Long>, QueryByExampleExecutor<WeeklyReportEntry> {
 	public List<WeeklyReportEntry> findByHash(String hash);
 
 	public List<WeeklyReportEntry> findByCustomerIgnoreCase(String customer);

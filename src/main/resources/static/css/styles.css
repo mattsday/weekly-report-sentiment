@@ -28,3 +28,16 @@ select#cust_select {
 select#date_select {
 	width: 200px
 }
+
+select#sentiment_select {
+	width: 80px
+}
+select#pa_select {
+	width: 200px
+}
+select#play_select {
+	width: 100px
+}
+select#category_select {
+	width: 100px
+}

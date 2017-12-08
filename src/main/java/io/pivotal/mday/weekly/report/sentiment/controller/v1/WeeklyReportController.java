@@ -1,6 +1,7 @@
 package io.pivotal.mday.weekly.report.sentiment.controller.v1;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -24,12 +25,6 @@ public class WeeklyReportController {
 
 	private WeeklyReportService reportService;
 	private WeeklyReportRepo repo;
-
-	@GetMapping("/init")
-	public String test() {
-		reportService.parseWeeklyReports();
-		return "Initialised!";
-	}
 
 	@GetMapping("/list")
 	public List<WeeklyReportEntry> listAll() {
@@ -82,5 +77,34 @@ public class WeeklyReportController {
 		List<String> sortedPlays = new ArrayList<>(plays);
 		Collections.sort(sortedPlays);
 		return sortedPlays;
+	}
+
+	@GetMapping("/pas")
+	public List<String> listPas() {
+		reportService.parseWeeklyReports();
+		Set<String> pas = new HashSet<>();
+		for (WeeklyReportEntry e : repo.findAll()) {
+			pas.addAll(e.getPas());
+		}
+		List<String> sortedPas = new ArrayList<>(pas);
+		Collections.sort(sortedPas);
+		return sortedPas;
+	}
+
+	@GetMapping("/sentiment")
+	public List<Double> listSentiment() {
+		reportService.parseWeeklyReports();
+		Set<Double> sentiment = new HashSet<>();
+		for (WeeklyReportEntry e : repo.findAll()) {
+			sentiment.add(e.getSentiment());
+		}
+		List<Double> sortedSentiment = new ArrayList<>(sentiment);
+		Collections.sort(sortedSentiment);
+		return sortedSentiment;
+	}
+
+	@GetMapping("/categories")
+	public List<String> listCategories() {
+		return Arrays.asList(new String[] { "positive", "negative", "flat", "poc" });
 	}
 }

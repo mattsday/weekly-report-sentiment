@@ -39,7 +39,7 @@ public class GoogleChartService {
 			row.add(new RowData(e.getDate()));
 			row.add(new RowData(e.getCustomer()));
 			row.add(new RowData(e.getSentiment()));
-			row.add(new RowData(String.join(",", e.getPas())));
+			row.add(new RowData(String.join(", ", e.getPas())));
 			row.add(new RowData(e.getSalesPlay()));
 			row.add(new RowData(e.getCategory()));
 			row.add(new RowData(e.getReportText()));
