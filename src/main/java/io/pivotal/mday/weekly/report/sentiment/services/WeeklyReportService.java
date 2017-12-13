@@ -8,7 +8,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
 
-import io.pivotal.mday.weekly.report.sentiment.config.MutationMap;
+import io.pivotal.mday.weekly.report.sentiment.config.CustomerMutationMap;
+import io.pivotal.mday.weekly.report.sentiment.config.PaMutationMap;
 import io.pivotal.mday.weekly.report.sentiment.config.ReportsConfiguration;
 import io.pivotal.mday.weekly.report.sentiment.model.google.drive.WeeklyReportFile;
 import io.pivotal.mday.weekly.report.sentiment.model.weeklyreport.WeeklyReportEntry;
@@ -25,7 +26,8 @@ public class WeeklyReportService {
 	private ReportsConfiguration reportConfig;
 	private WeeklyReportRepo reportRepo;
 	private FileModifiedRepo fileRepo;
-	private MutationMap mutationMap;
+	private CustomerMutationMap customerMutationMap;
+	private PaMutationMap paMutationMap;
 
 	public void parseWeeklyReports() {
 		// Get a list of weekly reports:
@@ -184,7 +186,12 @@ public class WeeklyReportService {
 		Matcher matcher = paPattern.matcher(line);
 		List<String> pas = new ArrayList<String>(2);
 		while (matcher.find()) {
-			pas.add(matcher.group(1));
+			String paName = matcher.group(1);
+			// Check against known mutations (e.g. Paname => PaName)
+			if (paMutationMap.getPaMutation().containsKey(paName)) {
+				paName = paMutationMap.getPaMutation().get(paName);
+			}
+			pas.add(paName);
 			end = (matcher.end() > end) ? matcher.end() : end;
 		}
 		if (pas.size() == 0) {
@@ -200,8 +207,8 @@ public class WeeklyReportService {
 			String customerName = matcher.group(1);
 
 			// Check against known mutations (e.g. Orwell => Ipagoo)
-			if (mutationMap.getMutation().containsKey(customerName)) {
-				customerName = mutationMap.getMutation().get(customerName);
+			if (customerMutationMap.getCustomerMutation().containsKey(customerName)) {
+				customerName = customerMutationMap.getCustomerMutation().get(customerName);
 			}
 			entry.setCustomer(customerName);
 
@@ -215,7 +222,8 @@ public class WeeklyReportService {
 		matcher = salesPlayPattern.matcher(line);
 
 		if (matcher.find()) {
-			final String salesPlay = matcher.group(1);
+			// Convert sales play to lower case
+			final String salesPlay = matcher.group(1).toLowerCase();
 			entry.setSalesPlay(salesPlay);
 			end = (matcher.end() > end) ? matcher.end() : end;
 		} else {

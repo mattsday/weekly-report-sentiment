@@ -33,7 +33,9 @@ googleapi:
 reports:
   folder: 0B9XNf23Qd2uET1h2Z21GaG1ldGM
   pattern: ^Weekly Report EMEA UKI - (\d{2,4}.\d{2}.\d{2,4})$
-  mutation:
+  paMutation:
+    DuncanMcintyre: DuncanMcIntyre
+  customerMutation:
     ipagoo: Orwell
     Ipagoo: Orwell
     Dell/EMC: DellEMC

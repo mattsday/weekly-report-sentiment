@@ -42,7 +42,8 @@ function loadPaList(jsonData) {
 
 function loadCategoryList(jsonData) {
 	jsonData.forEach(function(category) {
-		$("#category_select").append($('<option></option>').val(category).html(category));
+		$("#category_select").append(
+				$('<option></option>').val(category).html(category));
 	})
 	updateDropDowns();
 	$('#category_select').trigger("chosen:updated");
@@ -174,7 +175,7 @@ function startup() {
 	})).done(function(jsonData) {
 		loadPlaysList(jsonData);
 	});
-	
+
 	// Load sentiment
 	$.when($.ajax({
 		url : "/v1/sentiment",
@@ -183,7 +184,7 @@ function startup() {
 	})).done(function(jsonData) {
 		loadSentimentList(jsonData);
 	});
-	
+
 	// Load pas
 	$.when($.ajax({
 		url : "/v1/pas",
@@ -192,7 +193,7 @@ function startup() {
 	})).done(function(jsonData) {
 		loadPaList(jsonData);
 	});
-	
+
 	// Load categories
 	$.when($.ajax({
 		url : "/v1/categories",
@@ -201,4 +202,17 @@ function startup() {
 	})).done(function(jsonData) {
 		loadCategoryList(jsonData);
 	});
+
+	$("#cust_select_form").on("submit", function(e) {
+		e.preventDefault();
+		$.when($.ajax({
+			url : "/v1/update",
+			dataType : "text",
+			async : true
+		})).done(function(response) {
+			loadCharts();
+			updateDropDowns();
+		});
+	});
+
 }

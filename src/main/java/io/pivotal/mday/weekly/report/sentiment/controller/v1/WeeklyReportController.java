@@ -1,7 +1,6 @@
 package io.pivotal.mday.weekly.report.sentiment.controller.v1;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -94,13 +93,13 @@ public class WeeklyReportController {
 	}
 
 	@GetMapping("/sentiment")
-	public List<Double> listSentiment() {
-		return Arrays.asList(new Double[] { 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0d, -0.1, -0.2, -0.3, -0.4,
-				-0.5, -0.6, -0.7, -0.8, -0.9 });
+	public Double[] listSentiment() {
+		return new Double[] { 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0d, -0.1, -0.2, -0.3, -0.4, -0.5, -0.6, -0.7,
+				-0.8, -0.9 };
 	}
 
 	@GetMapping("/categories")
-	public List<String> listCategories() {
-		return Arrays.asList(new String[] { "positive", "negative", "flat", "poc" });
+	public String[] listCategories() {
+		return new String[] { "positive", "negative", "flat", "poc" };
 	}
 }

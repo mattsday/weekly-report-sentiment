@@ -133,8 +133,8 @@ public class GoogleChartService {
 
 	private List<Col> getLineChartCols() {
 		return new ArrayList<Col>(
-				Arrays.asList(new Col[] { new Col("A", "Date", "string"), new Col("B", "Minimum", "number"),
-						new Col("C", "Maximum", "number"), new Col("D", "Average", "number"), }));
+				Arrays.asList(new Col[] { new Col("A", "Date", "string"), new Col("B", "Maximum", "number"),
+						new Col("C", "Minimum", "number"), new Col("D", "Average", "number"), }));
 	}
 
 	private double getMean(List<Double> sentiment) {
