@@ -182,7 +182,7 @@ public class WeeklyReportService {
 		int end = 0;
 
 		// Pick out the PAs (start with @, can be more than one)
-		Pattern paPattern = Pattern.compile("@(.*?)\\s");
+		Pattern paPattern = Pattern.compile(" @(.*?)\\s");
 		Matcher matcher = paPattern.matcher(line);
 		List<String> pas = new ArrayList<String>(2);
 		while (matcher.find()) {
@@ -204,7 +204,8 @@ public class WeeklyReportService {
 		matcher = customerPattern.matcher(line);
 
 		if (matcher.find()) {
-			String customerName = matcher.group(1);
+			// Remove '.' from PA names
+			String customerName = matcher.group(1).replace(".", "");
 
 			// Check against known mutations (e.g. Orwell => Ipagoo)
 			if (customerMutationMap.getCustomerMutation().containsKey(customerName)) {

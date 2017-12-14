@@ -64,8 +64,7 @@ function updateDropDowns() {
 				.parse(decodeURIComponent(window.location.hash.substring(1)));
 		customer = a.customer;
 		date = a.date;
-	}
-	catch (e) {
+	} catch (e) {
 		a = new Object();
 		a.customer = customer;
 		a.date = date;
@@ -96,8 +95,7 @@ function getHash() {
 	try {
 		var a = JSON
 				.parse(decodeURIComponent(window.location.hash.substring(1)));
-	}
-	catch (e) {
+	} catch (e) {
 		a = new Object();
 	}
 	if (!a.date) {
@@ -194,6 +192,15 @@ function startup() {
 		loadPaList(jsonData);
 	});
 
+	function updateGraphRefreshing(time) {
+		// Only do it whilst we're actually refreshing
+		if ($("#refresh").prop('disabled') == true) {
+			loadCharts();
+			updateDropDowns();
+			setTimeout(updateGraphRefreshing, time, time);
+		}
+	}
+
 	// Load categories
 	$.when($.ajax({
 		url : "/v1/categories",
@@ -205,13 +212,20 @@ function startup() {
 
 	$("#cust_select_form").on("submit", function(e) {
 		e.preventDefault();
+		$("#refresh").prop('value', 'Refreshing...');
+		$('#refresh').prop('disabled', true);
+		// Refresh the graph every 5 seconds
+		updateGraphRefreshing(1000);
 		$.when($.ajax({
 			url : "/v1/update",
 			dataType : "text",
 			async : true
 		})).done(function(response) {
+			$('#refresh').prop('disabled', false);
+			$("#refresh").prop('value', 'Refresh');
 			loadCharts();
 			updateDropDowns();
+
 		});
 	});
 
