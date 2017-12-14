@@ -182,7 +182,7 @@ public class WeeklyReportService {
 		int end = 0;
 
 		// Pick out the PAs (start with @, can be more than one)
-		Pattern paPattern = Pattern.compile(" @(.*?)\\s");
+		Pattern paPattern = Pattern.compile("@(.*?)\\s");
 		Matcher matcher = paPattern.matcher(line);
 		List<String> pas = new ArrayList<String>(2);
 		while (matcher.find()) {
