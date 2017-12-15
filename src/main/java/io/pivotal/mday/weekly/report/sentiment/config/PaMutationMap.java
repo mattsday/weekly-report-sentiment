@@ -14,5 +14,4 @@ import lombok.Data;
 @Data
 public class PaMutationMap {
 	private Map<String, String> paMutation;
-
 }
