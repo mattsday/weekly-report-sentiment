@@ -62,19 +62,22 @@ public class ChartControllerV2 {
 			if (!checkContains(query.getSalesPlay(), report.getSalesPlay())) {
 				continue;
 			}
-			/*
-			 * if ((query.getCustomer() != null) &&
-			 * (!query.getCustomer().contains(report.getCustomer()))) {
-			 * continue; } if ((query.getDate() != null) &&
-			 * (!query.getDate().contains(report.getDate()))) { continue; } if
-			 * ((query.getSentiment() != null) &&
-			 * (!query.getSentiment().contains(report.getSentiment()))) {
-			 * continue; } if ((query.getCategory() != null) &&
-			 * (!query.getCategory().contains(report.getCategory()))) {
-			 * continue; } if ((query.getSalesPlay() != null) &&
-			 * (!query.getSalesPlay().contains(report.getSalesPlay()))) {
-			 * continue; }
-			 */
+			// Check search query
+			if (query.getQ() != null) {
+				String text = report.getReportText().toLowerCase();
+				// Chunk text in to blocks
+				boolean match = true;
+				String[] search = query.getQ().toLowerCase().split(" ");
+				for (String word : search) {
+					if (!text.contains(word)) {
+						match = false;
+					}
+				}
+				if (match == false) {
+					continue;
+				}
+			}
+
 			results.add(report);
 		}
 		return results;

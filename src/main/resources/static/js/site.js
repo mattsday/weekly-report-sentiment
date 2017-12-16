@@ -79,6 +79,9 @@ function updateDropDowns() {
 		$("#category_select").val(a.category);
 		$('#category_select').trigger("chosen:updated");
 	}
+	if (a.q) {
+		$("#q").val(a.q);
+	}
 }
 
 function getHash() {
@@ -140,6 +143,12 @@ function startup() {
 		var category = $("#andor_select").val();
 		var a = getHash();
 		a.andor = category;
+		location.hash = JSON.stringify(a);
+	});
+	$('#q').on('input', function() {
+		var query = $("#q").val();
+		var a = getHash();
+		a.q = query;
 		location.hash = JSON.stringify(a);
 	});
 

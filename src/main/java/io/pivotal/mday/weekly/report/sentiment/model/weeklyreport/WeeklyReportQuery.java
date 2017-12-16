@@ -3,7 +3,6 @@ package io.pivotal.mday.weekly.report.sentiment.model.weeklyreport;
 import java.util.List;
 
 import javax.persistence.ElementCollection;
-import javax.persistence.Lob;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -27,7 +26,6 @@ public class WeeklyReportQuery {
 	@JsonProperty("sales_play")
 	private List<String> salesPlay;
 
-	@Lob
 	@JsonProperty("report_text")
 	private List<String> reportText;
 
@@ -39,6 +37,9 @@ public class WeeklyReportQuery {
 
 	@JsonProperty("andor")
 	private String andor;
+
+	@JsonProperty("q")
+	private String q;
 
 	public String getAndor() {
 		if (andor == null) {

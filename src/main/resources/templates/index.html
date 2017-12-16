@@ -10,6 +10,10 @@
 <script src="webjars/chosen/chosen.jquery.js"></script>
 <link rel="stylesheet" href="webjars/chosen/chosen.css" />
 <link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+	integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+	crossorigin="anonymous" />
 <meta name="_csrf" th:attr="content=${_csrf.token}" />
 <meta name="_csrf_header" th:attr="content=${_csrf.headerName}" />
 <script type="text/javascript">
@@ -33,10 +37,8 @@
 			multiple="multiple" data-placeholder="Sentiment">
 		</select> <select name="category" class="chosen-select" id="category_select"
 			multiple="multiple" data-placeholder="Categories">
-		</select> <select name="andor" class="chosen-select" id="andor_select">
-			<option value="or">Or</option>
-			<option value="and">And</option>
-		</select> <input type="submit" id="refresh" name="refresh" value="refresh" />
+		</select> <input type="text" name="q" id="q" placeholder="Search Report Text" /> <input
+			type="submit" id="refresh" name="refresh" value="refresh" />
 	</form>
 	<div id="curve_chart"></div>
 
