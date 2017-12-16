@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/v1/chart")
 @AllArgsConstructor
 @RestController
-public class ChartController {
+public class ChartControllerV1 {
 
 	private GoogleChartService chartService;
 	private WeeklyReportRepo repo;

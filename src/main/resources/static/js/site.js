@@ -55,39 +55,54 @@ $(document).ready(function() {
 
 function updateDropDowns() {
 	var a = getHash();
-	var customer = "_all";
-	var date = "_all";
-	var sentiment = "_all";
-	var play = "_all";
-	try {
-		var a = JSON
-				.parse(decodeURIComponent(window.location.hash.substring(1)));
-		customer = a.customer;
-		date = a.date;
-	} catch (e) {
-		a = new Object();
-		a.customer = customer;
-		a.date = date;
+	if (a.customer) {
+		$("#cust_select").val(a.customer);
+		$('#cust_select').trigger("chosen:updated");
 	}
-	$('select[name^="customer"] option:selected').attr("selected", null);
-	$('select[name^="customer"] option[value="' + customer + '"]').attr(
-			"selected", "selected");
-	$('#cust_select').trigger("chosen:updated");
+	if (a.date) {
+		$("#date_select").val(a.date);
+		$('#date_select').trigger("chosen:updated");
+	}
+	if (a.sales_play) {
+		$("#play_select").val(a.sales_play);
+		$('#play_select').trigger("chosen:updated");
+	}
+	if (a.pas) {
+		$("#pa_select").val(a.pas);
+		$('#pa_select').trigger("chosen:updated");
+	}
+	if (a.sentiment) {
+		$("#sentiment_select").val(a.sentiment);
+		$('#sentiment_select').trigger("chosen:updated");
+	}
+	if (a.category) {
+		$("#category_select").val(a.category);
+		$('#category_select').trigger("chosen:updated");
+	}
 
-	$('select[name^="date"] option:selected').attr("selected", null);
-	$('select[name^="date"] option[value="' + date + '"]').attr("selected",
-			"selected");
-	$('#date_select').trigger("chosen:updated");
-
-	$('select[name^="sentiment"] option:selected').attr("selected", null);
-	$('select[name^="sentiment"] option[value="' + sentiment + '"]').attr(
-			"selected", "selected");
-	$('#sentiment_select').trigger("chosen:updated");
-
-	$('select[name^="play"] option:selected').attr("selected", null);
-	$('select[name^="play"] option[value="' + play + '"]').attr("selected",
-			"selected");
-	$('#play_select').trigger("chosen:updated");
+	/*
+	 * var a = getHash(); var customer = "_all"; var date = "_all"; var
+	 * sentiment = "_all"; var play = "_all"; try { var a = JSON
+	 * .parse(decodeURIComponent(window.location.hash.substring(1))); customer =
+	 * a.customer; date = a.date; } catch (e) { a = new Object(); a.customer =
+	 * customer; a.date = date; } $('select[name^="customer"]
+	 * option:selected').attr("selected", null); $('select[name^="customer"]
+	 * option[value="' + customer + '"]').attr( "selected", "selected");
+	 * $('#cust_select').trigger("chosen:updated");
+	 * 
+	 * $('select[name^="date"] option:selected').attr("selected", null);
+	 * $('select[name^="date"] option[value="' + date + '"]').attr("selected",
+	 * "selected"); $('#date_select').trigger("chosen:updated");
+	 * 
+	 * $('select[name^="sentiment"] option:selected').attr("selected", null);
+	 * $('select[name^="sentiment"] option[value="' + sentiment + '"]').attr(
+	 * "selected", "selected");
+	 * $('#sentiment_select').trigger("chosen:updated");
+	 * 
+	 * $('select[name^="play"] option:selected').attr("selected", null);
+	 * $('select[name^="play"] option[value="' + play + '"]').attr("selected",
+	 * "selected"); $('#play_select').trigger("chosen:updated");
+	 */
 }
 
 function getHash() {
@@ -97,9 +112,7 @@ function getHash() {
 				.parse(decodeURIComponent(window.location.hash.substring(1)));
 	} catch (e) {
 		a = new Object();
-	}
-	if (!a.date) {
-		a.date = "_all"
+		a.date = [];
 	}
 	return a;
 }
@@ -112,25 +125,25 @@ function startup() {
 	});
 	// Make dropdown trigger location changes
 	$("#cust_select").change(function() {
-		var customer = $("#cust_select option:selected").val();
+		var customer = $("#cust_select").val();
 		var a = getHash();
 		a.customer = customer;
 		location.hash = JSON.stringify(a);
 	});
 	$("#date_select").change(function() {
-		var date = $("#date_select option:selected").val();
+		var date = $("#date_select").val();
 		var a = getHash();
 		a.date = date;
 		location.hash = JSON.stringify(a);
 	});
 	$("#sentiment_select").change(function() {
-		var sentiment = $("#sentiment_select option:selected").val();
+		var sentiment = $("#sentiment_select").val();
 		var a = getHash();
 		a.sentiment = sentiment;
 		location.hash = JSON.stringify(a);
 	});
 	$("#play_select").change(function() {
-		var play = $("#play_select option:selected").val();
+		var play = $("#play_select").val();
 		var a = getHash();
 		a.sales_play = play;
 		location.hash = JSON.stringify(a);
@@ -145,6 +158,12 @@ function startup() {
 		var category = $("#category_select").val();
 		var a = getHash();
 		a.category = category;
+		location.hash = JSON.stringify(a);
+	});
+	$("#andor_select").change(function() {
+		var category = $("#andor_select").val();
+		var a = getHash();
+		a.andor = category;
 		location.hash = JSON.stringify(a);
 	});
 

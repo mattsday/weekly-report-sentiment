@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript"
+	src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script type="text/javascript" src="js/site.js"></script>
 <script type="text/javascript" src="js/chart.js"></script>
 <script src="webjars/chosen/chosen.jquery.js"></script>
@@ -19,17 +21,21 @@
 </head>
 <body>
 	<form id="cust_select_form">
-		<select name="customer" class="chosen-select" id="cust_select">
-			<option value="_all">All Customers</option>
-		</select> <select name="date" class="chosen-select" id="date_select">
-			<option value="_all">Any Date</option>
-		</select> <select name="play" class="chosen-select" id="play_select">
-			<option value="_all">All Sales Plays</option>
-		</select> <select name="pas" class="chosen-select" id="pa_select" multiple="multiple" data-placeholder="Account PA(s)">
-		</select> <select name="sentiment" class="chosen-select" id="sentiment_select">
-			<option value="_all">Any Sentiment</option>
-		</select> <select name="category" class="chosen-select" id="category_select">
-			<option value="_all">Any Category</option>
+		<select name="customer" class="chosen-select" id="cust_select"
+			multiple="multiple" data-placeholder="Customer(s)">
+		</select> <select name="date" class="chosen-select" id="date_select"
+			multiple="multiple" data-placeholder="Date(s)">
+		</select> <select name="play" class="chosen-select" id="play_select"
+			multiple="multiple" data-placeholder="Play(s)">
+		</select> <select name="pas" class="chosen-select" id="pa_select"
+			multiple="multiple" data-placeholder="Account PA(s)">
+		</select> <select name="sentiment" class="chosen-select" id="sentiment_select"
+			multiple="multiple" data-placeholder="Sentiment">
+		</select> <select name="category" class="chosen-select" id="category_select"
+			multiple="multiple" data-placeholder="Categories">
+		</select> <select name="andor" class="chosen-select" id="andor_select">
+			<option value="or">Or</option>
+			<option value="and">And</option>
 		</select> <input type="submit" id="refresh" name="refresh" value="refresh" />
 	</form>
 	<div id="curve_chart"></div>

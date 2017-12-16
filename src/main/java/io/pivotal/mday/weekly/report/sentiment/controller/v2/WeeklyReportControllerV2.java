@@ -1,4 +1,4 @@
-package io.pivotal.mday.weekly.report.sentiment.controller.v1;
+package io.pivotal.mday.weekly.report.sentiment.controller.v2;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,10 +17,10 @@ import io.pivotal.mday.weekly.report.sentiment.repo.WeeklyReportRepo;
 import io.pivotal.mday.weekly.report.sentiment.services.WeeklyReportService;
 import lombok.AllArgsConstructor;
 
-@RequestMapping("/v1")
+@RequestMapping("/v2")
 @RestController
 @AllArgsConstructor
-public class WeeklyReportController {
+public class WeeklyReportControllerV2 {
 
 	private WeeklyReportService reportService;
 	private WeeklyReportRepo repo;

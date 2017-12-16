@@ -73,49 +73,20 @@ function drawReportTable(jsonData) {
 
 function loadCharts() {
 	var a = getHash();
-	var customer = "_all";
-	var date = "_all";
-	try {
-		var a = getHash();
-		customer = a.customer;
-		date = a.date;
-	}
-	catch (e) {
-		a = new Object();
-		a.customer = customer;
-		a.date = date;
-	}
-
-	var sentimentChartUrl = "/v1/chart/sentiment";
-	var tableUrl = "/v1/chart/table"
+	var date = a.date;
+	date = a.date;
+	var sentimentChartUrl = "/v2/chart/sentiment";
+	var tableUrl = "/v2/chart/table"
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content")
-	if (a.date == "_all") {
-		delete a.date;
-	}
-	if (a.customer == "_all") {
-		delete a.customer;
-	}
-	if (a.sales_play == "_all") {
-		delete a.sales_play;
-	}
-	if (a.pas == "_all") {
-		delete a.pas;
-	}
-	if (a.sentiment == "_all") {
-		delete a.sentiment;
-	}
-	if (a.category == "_all") {
-		delete a.category;
-	}
 	var dataString = JSON.stringify(a);
 
-	if (date != "_all") {
+	if (date.length == 1) {
 		// Draw a different type of chart:
 
 		$.when($.ajax({
 			type : "POST",
-			url : "/v1/chart/date",
+			url : "/v2/chart/date",
 			contentType : 'application/json',
 			beforeSend : function(request) {
 				request.setRequestHeader(header, token);
@@ -131,7 +102,7 @@ function loadCharts() {
 		// Draw the usual chart
 		$.when($.ajax({
 			type : "POST",
-			url : "/v1/chart/sentiment",
+			url : "/v2/chart/sentiment",
 			contentType : 'application/json',
 			beforeSend : function(request) {
 				request.setRequestHeader(header, token);
@@ -145,7 +116,7 @@ function loadCharts() {
 	}
 	$.when($.ajax({
 		type : "POST",
-		url : "/v1/chart/table",
+		url : "/v2/chart/table",
 		contentType : 'application/json',
 		beforeSend : function(request) {
 			request.setRequestHeader(header, token);
