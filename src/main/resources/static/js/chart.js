@@ -53,7 +53,8 @@ function drawSentimentChart(jsonData) {
 		if (m) {
 			var date = data.getValue(parseInt(m[1]), 0);
 			var a = getHash();
-			a.date = date;
+			a.date = [];
+			a.date[0] = date;
 			location.hash = JSON.stringify(a);
 		}
 	}

@@ -79,30 +79,6 @@ function updateDropDowns() {
 		$("#category_select").val(a.category);
 		$('#category_select').trigger("chosen:updated");
 	}
-
-	/*
-	 * var a = getHash(); var customer = "_all"; var date = "_all"; var
-	 * sentiment = "_all"; var play = "_all"; try { var a = JSON
-	 * .parse(decodeURIComponent(window.location.hash.substring(1))); customer =
-	 * a.customer; date = a.date; } catch (e) { a = new Object(); a.customer =
-	 * customer; a.date = date; } $('select[name^="customer"]
-	 * option:selected').attr("selected", null); $('select[name^="customer"]
-	 * option[value="' + customer + '"]').attr( "selected", "selected");
-	 * $('#cust_select').trigger("chosen:updated");
-	 * 
-	 * $('select[name^="date"] option:selected').attr("selected", null);
-	 * $('select[name^="date"] option[value="' + date + '"]').attr("selected",
-	 * "selected"); $('#date_select').trigger("chosen:updated");
-	 * 
-	 * $('select[name^="sentiment"] option:selected').attr("selected", null);
-	 * $('select[name^="sentiment"] option[value="' + sentiment + '"]').attr(
-	 * "selected", "selected");
-	 * $('#sentiment_select').trigger("chosen:updated");
-	 * 
-	 * $('select[name^="play"] option:selected').attr("selected", null);
-	 * $('select[name^="play"] option[value="' + play + '"]').attr("selected",
-	 * "selected"); $('#play_select').trigger("chosen:updated");
-	 */
 }
 
 function getHash() {
