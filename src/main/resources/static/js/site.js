@@ -216,7 +216,7 @@ function startup() {
 
 	$("#cust_select_form").on("submit", function(e) {
 		e.preventDefault();
-		$("#refresh").prop('value', 'Refreshing...');
+		$("#refresh").prop('value', 'Updating...');
 		$('#refresh').prop('disabled', true);
 		// Refresh the graph every 5 seconds
 		updateGraphRefreshing(1000);
@@ -226,7 +226,7 @@ function startup() {
 			async : true
 		})).done(function(response) {
 			$('#refresh').prop('disabled', false);
-			$("#refresh").prop('value', 'Refresh');
+			$("#refresh").prop('value', 'Update');
 			loadCharts();
 			updateDropDowns();
 

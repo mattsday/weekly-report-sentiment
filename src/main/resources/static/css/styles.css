@@ -23,21 +23,25 @@ div#report_table {
 }
 
 select#cust_select {
-	width: 400px
+	width: 20em
 }
 select#date_select {
-	width: 150px
+	width: 8em
 }
 
 select#sentiment_select {
-	width: 120px
+	width: 5em
 }
 select#pa_select {
-	width: 200px
+	width: 15em
 }
 select#play_select {
-	width: 150px
+	width: 10em
 }
 select#category_select {
-	width: 120px
+	width: 5em
+}
+
+input#refresh {
+	width: 8em;
 }
