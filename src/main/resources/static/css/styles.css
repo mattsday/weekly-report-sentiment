@@ -39,7 +39,7 @@ select#play_select {
 	width: 10em
 }
 select#category_select {
-	width: 5em
+	width: 10em
 }
 
 input#refresh {
